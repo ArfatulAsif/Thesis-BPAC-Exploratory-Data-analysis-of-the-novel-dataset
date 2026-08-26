@@ -1,0 +1,77 @@
+# ============================================================================
+# BPAC Part A — single source of truth for ALL paths and hyperparameters.
+#
+# Relative paths are resolved relative to THIS file's directory (Part_A/).
+# Part_A/ and data/ are siblings, so data_root is ../data:
+#
+#   <project_root>/
+#   ├── Part_A/        <- this file lives here (Part_A/config.yml)
+#   └── data/
+#       ├── BPAC/
+#       └── best_diverse_sentences.csv
+# ============================================================================
+
+paths:
+  data_root: "../data"          # folder containing BPAC/ and the sentences CSV
+  data_clean_root: "../data_clean"   # T6 (A7): VAD speaking rate reads the frozen clean corpus
+  verified_manifest: "../verified_manifest.csv"   # T6 (A7): Phase-1-verified manifest
+  bpac_subdir: "BPAC"           # audio root under data_root
+  sentences_csv: null           # null -> <data_root>/<corpus.sentences_filename>
+  reports_dirname: "reports"    # each analysis writes into its own <folder>/reports/
+
+corpus:
+  sentences_filename: "best_diverse_sentences.csv"
+  n_sentences: 250              # expected parallel sentences per speaker
+
+audio:
+  analysis_sr: 16000            # Hz; model/feature input (format only)
+  default_top_db: 30            # silence-trim threshold (dB below peak)
+  pitch_ranges:                 # F0 floor/ceiling per gender (Hz)
+    male: [75, 300]
+    female: [100, 500]
+
+fonts:
+  # First installed font wins; used for Bangla glyph labels in A4/A5 figures.
+  bangla_candidates:
+    - "Noto Sans Bengali"
+    - "Noto Serif Bengali"
+    - "Kalpurush"
+    - "Siyam Rupali"
+    - "Mukti"
+    - "AdorshoLipi"
+    - "Lohit Bengali"
+    - "Nikosh"
+    - "Vrinda"
+    - "Shonar Bangla"
+
+logging:
+  verbose: true
+
+# ---------------------------------------------------------------------------
+# Per-analysis hyperparameters
+# ---------------------------------------------------------------------------
+a2_audio_length:
+  mode: "raw"                   # raw (header duration) | speech (silence-trimmed)
+  top_db: 30
+
+a4_character_count:
+  top_chars: 30
+
+a5_word_count:
+  top_words: 30
+
+a6_speaking_rate_pitch:
+  top_db: 30
+  max_per_speaker: null         # null = all utterances; set an int for a quick pass
+  compute_f0: true
+
+# ---- T6: VAD-based speaking rate (replaces A6's top_db energy trim) ----
+a7_vad_speaking_rate:
+  max_per_speaker: null         # null = all utterances; set an int for a quick pass
+  compute_f0: true
+  min_speech_dur_s: 0.30        # below this -> excluded from WPM aggregates
+  min_speech_ratio: 0.20
+  max_speech_ratio: 0.99
+  wpm_valid_range: [60, 400]
+  vad_threshold: 0.5            # silero VAD speech-probability threshold
+  old_method_metrics_csv: "../A6_speaking_rate_pitch/reports/utterance_metrics.csv"  # for the before/after table

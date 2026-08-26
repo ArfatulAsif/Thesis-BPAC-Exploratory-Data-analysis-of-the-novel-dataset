@@ -1,0 +1,25 @@
+{
+  "task_id": "T6_A7_vad_speaking_rate",
+  "generated_at": "2026-07-31T19:03:10+00:00",
+  "config_hash": "3cbc51b53661",
+  "n_utterances_in": 12747,
+  "n_utterances_used": 12508,
+  "count_unit": "utterances",
+  "n_excluded_from_agg": 239,
+  "pct_excluded": 1.875,
+  "overall_wpm_mean": 128.82,
+  "overall_wpm_median": 126.32,
+  "overall_articulation_rate_mean": 6.455,
+  "vad_threshold": 0.5,
+  "guards": {
+    "min_speech_dur_s": 0.3,
+    "min_speech_ratio": 0.2,
+    "max_speech_ratio": 0.99,
+    "wpm_valid_range": [
+      60,
+      400
+    ]
+  },
+  "verified_manifest_still_has_pending_review": false,
+  "wpm_mean_reduction_pct_overall": -6.11
+}

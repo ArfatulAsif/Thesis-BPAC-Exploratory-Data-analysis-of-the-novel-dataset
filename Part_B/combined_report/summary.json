@@ -1,0 +1,12 @@
+{
+  "models_present": [
+    "whisper_bengaliai_medium",
+    "wav2vec2_xlsr_bengali"
+  ],
+  "n_utterances_cached": 12750,
+  "primary_metric": "CER",
+  "exclude_empty_audio": true,
+  "best_overall_by_primary": "whisper_bengaliai_medium",
+  "hardest_region": "sylhet",
+  "easiest_region": "mymensingh"
+}

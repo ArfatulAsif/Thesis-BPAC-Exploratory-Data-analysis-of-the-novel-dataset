@@ -1,0 +1,17 @@
+# CITATION.cff -- placeholder (T1). Add co-authors, ORCID ids, and the
+# preferred-citation entry once the paper has a venue/DOI.
+cff-version: 1.2.0
+message: "If you use this code or the BPAC corpus, please cite it as below."
+title: "BPAC: A Parallel Regional-Accent Corpus for Bangla with Evidence of a Speaker-Independent Accent Signal"
+type: software
+authors:
+  - family-names: "Asif"
+    given-names: "Arfatul"
+    email: "redwaniarif@gmail.com"
+  # TODO: add remaining co-authors
+repository-code: "https://github.com/ArfatulAsif/Thesis-BPAC-Exploratory-Data-analysis-of-the-novel-dataset"
+# TODO: update once the GitHub repo is renamed to bpac-corpus (spec T1) --
+# not done automatically here since renaming the remote is a user action.
+license: MIT
+version: 0.1.0
+date-released: "2026-07-25"

@@ -1,0 +1,102 @@
+# ============================================================================
+# BPAC Part D -- phonetic accent map (BPAC Paper 1, new S7).
+#
+# Scaffolding (T1). D0-D7 implementations land as T11-T19 are worked; the
+# param blocks below reflect the method decisions already made in the spec
+# and will be extended as each task is implemented.
+#
+# Invariants (do not violate, see BPAC Paper 1 spec S0.4):
+#   1. All phonetic analysis reads data_root (data_clean/, 16 kHz) -- NEVER
+#      the denoised variant.
+#   2. Exception: D4 (T16) sibilant analysis reads raw_data_root (RAW
+#      44.1/48 kHz), resampled to sibilant_analysis_sr (32 kHz), not
+#      data_clean/ -- 16 kHz truncates the /s/ vs /sh/ spectral distinction.
+#   3. pipeline is perfectly confounded with gender (lab=male, app=female).
+#
+#   <project_root>/
+#   ├── Part_D/         <- this file (Part_D/config.yml)
+#   ├── data/           <- RAW corpus (input to D4 sibilant analysis only)
+#   └── data_clean/     <- CLEAN corpus from Part_C/C0 (input to everything else)
+# ============================================================================
+
+paths:
+  raw_data_root: "../data"                 # RAW corpus (T16 sibilants only)
+  data_root: "../data_clean"                # CLEAN corpus (everything else)
+  bpac_subdir: "BPAC"
+  sentences_csv: null                       # default: <data_root>/<sentences_filename>
+  # Canonical manifest once Phase 1 (T3-T5) lands; falls back to a plain
+  # build_manifest(data_root) walk until verified_manifest.csv exists.
+  verified_manifest: "../verified_manifest.csv"
+  reports_dirname: "reports"
+  cache_dir: "cache"
+
+corpus:
+  sentences_filename: "best_diverse_sentences.csv"
+  n_sentences: 250
+
+audio:
+  target_sr: 16000                          # data_clean/ sample rate (D1-D3, D5)
+  sibilant_analysis_sr: 32000               # T16 exception -- see invariant 2 above
+  pitch_ranges:
+    male: [75, 300]
+    female: [100, 500]
+
+# ---- D0 lexicon (T11) ----
+d0_lexicon:
+  lexicon_path: "D0_lexicon/reports/bpac_lexicon.txt"        # MFA format
+  phoneset_doc: "D0_lexicon/reports/phoneset.md"
+  review_top_n_by_freq: 500
+  review_random_tail_n: 200
+
+# ---- D1 forced alignment (T12) ----
+d1_alignment:
+  mfa_version_pin: "3.x"                    # pin exact version in requirements-lock.txt once installed
+  acoustic_model_out: "D1_alignment/reports/bpac_mfa_acoustic_model.zip"
+  textgrid_dir: "D1_alignment/reports/textgrids"
+  num_jobs: null                            # null -> MFA default (all cores)
+  heldout_region_for_robustness_check: "sylhet"
+
+# ---- D2 duration & rhythm (T13-T14) ----
+d2_duration_rhythm:
+  min_phone_ms: 10                          # flag phones shorter than this as alignment-stress
+  short_phone_ms: 20
+  long_nonvowel_ms: 300
+  fdr_alpha: 0.05
+
+# ---- D3 vowel space (T15) ----
+d3_vowel_space:
+  formant_ceiling_hz: {male: 5000, female: 5500}
+  formant_window_ms: 25
+  sample_points: [0.20, 0.50, 0.80]         # fraction of vowel duration
+  min_vowel_ms: 50
+  f1_valid_hz: [200, 1200]
+  f2_valid_hz: [500, 3000]
+  exclude_adjacent_phones: ["r", "rr", "l"]
+
+# ---- D4 consonants: sibilants + VOT (T16) ----
+d4_consonants:
+  sibilant_min_ms: 50
+  sibilant_band_hz: [500, 8000]
+  sibilant_window: "middle_50pct"
+  vot_manual_check_n: 300                   # ~40/region, per spec
+
+# ---- D5 intonation (T17) ----
+d5_intonation:
+  time_normalize_points: 100
+  contour_methods: ["linear", "phone_anchored"]
+  f0_unit: "semitone_re_speaker_median"
+
+# ---- D6 phonetic distance (T18) ----
+d6_phonetic_distance:
+  distance_metrics: ["euclidean", "cosine"]
+  linkage: "ward"
+  n_bootstrap: 1000
+
+# ---- D7 convergence test (T19) ----
+d7_convergence:
+  embedding_distance_matrix: "../Part_C/C1_Region_accent_distance_matrix/reports/distance_matrix.csv"
+  phonetic_distance_matrix: "D6_phonetic_distance/reports/phonetic_distance_matrix.csv"
+  n_permutations: 10000
+
+logging:
+  verbose: true

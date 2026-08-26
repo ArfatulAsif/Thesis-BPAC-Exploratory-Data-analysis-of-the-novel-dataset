@@ -1,0 +1,12 @@
+{
+  "n_sentence_tokens": 3384,
+  "n_unique_types": 2011,
+  "n_types_with_pronunciation": 2011,
+  "coverage_pct": 100.0,
+  "n_numeral_tokens": 51,
+  "numeral_note": "Digit-by-digit fallback reading (not natural numeral verbalization, e.g. '2023' read as 'two-zero-two-three' not 'two thousand twenty-three') -- flagged needs_numeral_verbalization_review=True for manual correction.",
+  "n_flagged_medial_schwa_risk": 1093,
+  "n_flagged_conjunct": 517,
+  "n_format_char_tokens_dropped": 1,
+  "phone_set_size": 45
+}

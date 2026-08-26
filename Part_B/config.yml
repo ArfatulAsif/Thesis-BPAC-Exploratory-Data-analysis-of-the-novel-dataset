@@ -1,0 +1,70 @@
+# ============================================================================
+# BPAC Part B (STT analysis) — single source of truth for paths, models,
+# inference and scoring. Relative paths resolve relative to THIS file (Part_B/).
+#
+#   <project_root>/
+#   ├── Part_B/        <- this file (Part_B/config.yml)
+#   └── data/
+#       ├── BPAC/
+#       └── best_diverse_sentences.csv
+# ============================================================================
+
+paths:
+  data_root: "../data"
+  bpac_subdir: "BPAC"
+  sentences_csv: null                 # null -> <data_root>/<corpus.sentences_filename>
+  reports_dirname: "reports"
+  predictions_cache: "cache/predictions.csv"   # shared by B1 & B2 (transcribe once)
+  duration_suspect_cells: "../Part_C/C0_Normalize_corpus/reports/alignment_suspect_cells.csv"  # T3 cross-validation
+
+corpus:
+  sentences_filename: "best_diverse_sentences.csv"
+  n_sentences: 250
+
+audio:
+  target_sr: 16000                    # all audio resampled to 16 kHz mono before ASR
+
+# ---- ASR models to benchmark (two different architectures) ----
+# NOTE: verify Model 1's exact HF repo path on huggingface.co (it appears under
+# both `tugstugi/...` and the `bengaliAI` org). Use the GENERAL (non-regional)
+# Bengali.AI Whisper-medium so accent shows up as degradation in B2.
+models:
+  - key: "whisper_bengaliai_medium"
+    type: "whisper"                   # encoder-decoder
+    hf_id: "bengaliAI/tugstugi_bengaliai-asr_whisper-medium"
+    language: "bn"                    # forced decode language; null to skip forcing
+    label: "Whisper-medium (Bengali.AI)"
+  - key: "wav2vec2_xlsr_bengali"
+    type: "wav2vec2_ctc"              # CTC / self-supervised
+    hf_id: "shahruk10/wav2vec2-xls-r-300m-bengali-commonvoice"
+    language: null
+    label: "XLS-R wav2vec2 (CTC)"
+
+inference:
+  device: "auto"                      # auto | cuda | cpu
+  batch_size: 1                       # 1 = one utterance at a time (safe for 4 GB GPUs)
+  fp16: true                          # half precision on CUDA (halves model memory)
+  whisper_beam_size: 1                # 1 = greedy (low memory); >1 = beam search
+  chunk_length_s: 30                  # process Whisper audio in <=30 s windows (handles long clips)
+  whisper_max_new_tokens: null        # null = no cap (greedy+batch1 keeps memory low); int to cap
+  save_every: 200                     # checkpoint cache every N utterances (resumable)
+  max_utterances: null                # null = whole corpus; int for a quick test pass
+  force_retranscribe: false           # true = ignore cache and re-run all models
+
+scoring:
+  normalize: true                     # NFC + punctuation strip on reference AND hypothesis
+  remove_punctuation: true
+  primary_metric: "cer"               # used for the region "distance from standard" ranking
+  exclude_empty_audio: true           # drop empty/dead-audio utterances from WER/CER
+
+# ---- T3 ASR-based parallel-alignment verification ----
+t3_alignment_verification:
+  primary_model: "whisper_bengaliai_medium"     # stronger model -> drives flags
+  confirm_model: "wav2vec2_xlsr_bengali"        # confirmation only
+  offdiag_cer_margin: 0.25            # self_cer - best_match_cer > this -> flag_offdiag
+  highcer_percentile: 99              # per-model global percentile -> flag_highcer
+  spotcheck_worklist_top_n: 300       # cap on rows written to spotcheck_worklist.csv
+  known_suspect_sentences: [1, 3, 22, 63, 83, 85, 103, 105]   # from C0's duration-based check
+
+logging:
+  verbose: true

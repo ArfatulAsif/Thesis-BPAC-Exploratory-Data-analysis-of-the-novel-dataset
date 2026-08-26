@@ -1,0 +1,20 @@
+{
+  "task_id": "T7_snr_quality",
+  "generated_at": "2026-07-31T21:32:09+00:00",
+  "config_hash": "3cbc51b53661",
+  "n_utterances_in": 12747,
+  "n_utterances_used": 12747,
+  "count_unit": "utterances",
+  "current_estimator_doc": "check_audio_quality.py's existing `snr_db` = 90th-percentile 25ms-frame RMS(dB) minus 10th-percentile 25ms-frame RMS(dB) -- an ad-hoc percentile-loudness-ratio heuristic, not a published/named method.",
+  "wada_calibration_fit_r2": 0.8084338607560089,
+  "kruskal_wallis_H": 1081.1114247261078,
+  "kruskal_wallis_p": 3.5659182463008976e-229,
+  "kruskal_wallis_epsilon_squared": 0.08431677719806169,
+  "snr_wer_correlation": {
+    "n_regions": 8,
+    "spearman_rho": -0.3273268353539886,
+    "p_value": 0.42869150723531324
+  },
+  "overall_wada_snr_median": 32.81,
+  "overall_noise_floor_median": -61.78
+}

@@ -1,0 +1,15 @@
+{
+  "task_id": "T20_denoise_check",
+  "generated_at": "2026-07-31T20:33:02+00:00",
+  "config_hash": "453142ad0b41",
+  "n_utterances_in": 51059,
+  "n_utterances_used": 2000,
+  "count_unit": "sibilant_tokens",
+  "mean_cog_shift_hz": 5.432032433912951,
+  "paired_ttest_p": 7.24022293454544e-23,
+  "wilcoxon_p": 4.634410836927658e-42,
+  "cohens_d": 0.2228532106996264,
+  "sylhet_separation_clean_d": -0.08459352130422032,
+  "sylhet_separation_denoised_d": -0.08098081690559199,
+  "noisereduce_params_used": "library defaults (thesis params not recoverable)"
+}

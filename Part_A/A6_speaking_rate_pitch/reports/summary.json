@@ -1,0 +1,9 @@
+{
+  "preprocessing": "speech-only duration (top_db=30); F0 per-gender floor/ceiling {'male': (75, 300), 'female': (100, 500)}",
+  "n_utterances_used": 12750,
+  "max_per_speaker": null,
+  "f0_computed": true,
+  "overall_wpm_mean": 125.31,
+  "overall_syll_per_s_mean": 6.303,
+  "f0_method": "parselmouth"
+}

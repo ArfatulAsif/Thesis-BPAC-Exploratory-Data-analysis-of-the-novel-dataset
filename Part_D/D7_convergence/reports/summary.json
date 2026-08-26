@@ -1,0 +1,71 @@
+{
+  "task_id": "T19_convergence",
+  "generated_at": "2026-07-31T20:31:54+00:00",
+  "config_hash": "44d8bf4c8ed3",
+  "n_utterances_in": 8,
+  "n_utterances_used": 8,
+  "count_unit": "regions",
+  "mantel_pearson": {
+    "observed_r": 0.13832783777055047,
+    "n_permutations": 10000,
+    "p_value": 0.4628,
+    "perm_mean": 0.0003537953291571803,
+    "perm_sd": 0.1854027655171802
+  },
+  "mantel_spearman": {
+    "observed_r": 0.2255062944718117,
+    "n_permutations": 10000,
+    "p_value": 0.2327,
+    "perm_mean": 0.0005987411056376568,
+    "perm_sd": 0.1863741196880825
+  },
+  "procrustes_disparity": 0.5512857337001895,
+  "per_region_agreement": [
+    {
+      "region": "chattogram",
+      "row_correlation": 0.9636708506397174
+    },
+    {
+      "region": "rajshahi",
+      "row_correlation": 0.9549829399291896
+    },
+    {
+      "region": "mymensingh",
+      "row_correlation": 0.9462753680256536
+    },
+    {
+      "region": "khulna",
+      "row_correlation": 0.9367257984339459
+    },
+    {
+      "region": "dhaka",
+      "row_correlation": 0.9317398025669218
+    },
+    {
+      "region": "sylhet",
+      "row_correlation": 0.9269243882380243
+    },
+    {
+      "region": "faridpur",
+      "row_correlation": 0.9165093251389422
+    },
+    {
+      "region": "rangpur",
+      "row_correlation": 0.8980555809956515
+    }
+  ],
+  "geo_vs_embedding": {
+    "observed_r": 0.17455200424777256,
+    "n_permutations": 10000,
+    "p_value": 0.3293,
+    "perm_mean": 0.002148055008610552,
+    "perm_sd": 0.17298423977886915
+  },
+  "geo_vs_phonetic": {
+    "observed_r": -0.19658075612629292,
+    "n_permutations": 10000,
+    "p_value": 0.3762,
+    "perm_mean": -0.0015515249564714453,
+    "perm_sd": 0.21406418982002762
+  }
+}

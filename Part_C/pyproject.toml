@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bpac-accent"
+version = "0.1.0"
+description = "BPAC Part C — accent-structure analysis (region distance + speaker/accent separability)"
+requires-python = ">=3.9"
+dependencies = [
+  "numpy>=1.23", "pandas>=1.5", "scipy>=1.9", "scikit-learn>=1.1",
+  "matplotlib>=3.6", "librosa>=0.10", "soundfile>=0.12",
+  "regex>=2023.0", "pyyaml>=6.0", "tqdm>=4.65",
+  "torch>=2.0", "transformers>=4.40", "speechbrain>=1.0",
+]
+
+[project.optional-dependencies]
+umap = ["umap-learn>=0.5"]
+
+[tool.setuptools]
+packages = ["bpac_accent"]

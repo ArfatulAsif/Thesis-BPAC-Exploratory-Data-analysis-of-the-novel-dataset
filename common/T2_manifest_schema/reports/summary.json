@@ -1,0 +1,23 @@
+{
+  "task_id": "T2_manifest_schema",
+  "generated_at": "2026-07-24T19:37:25+00:00",
+  "config_hash": "d2a24fb73030",
+  "n_utterances_in": 12750,
+  "n_utterances_used": 12750,
+  "n_columns": 14,
+  "n_speakers": 51,
+  "n_regions": 8,
+  "pipeline_gender_confound_holds": true,
+  "pipeline_gender_counts": {
+    "app/female": 6250,
+    "lab/male": 6500
+  },
+  "sample_rate_raw_values": [
+    44100,
+    48000
+  ],
+  "channels_raw_values": [
+    1,
+    2
+  ]
+}

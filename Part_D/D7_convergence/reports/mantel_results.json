@@ -1,0 +1,16 @@
+{
+  "pearson": {
+    "observed_r": 0.13832783777055047,
+    "n_permutations": 10000,
+    "p_value": 0.4628,
+    "perm_mean": 0.0003537953291571803,
+    "perm_sd": 0.1854027655171802
+  },
+  "spearman": {
+    "observed_r": 0.2255062944718117,
+    "n_permutations": 10000,
+    "p_value": 0.2327,
+    "perm_mean": 0.0005987411056376568,
+    "perm_sd": 0.1863741196880825
+  }
+}

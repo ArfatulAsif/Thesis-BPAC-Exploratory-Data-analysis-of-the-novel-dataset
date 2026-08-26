@@ -1,0 +1,11 @@
+{
+  "preprocessing": "NFC; code-point level; vowels = independent vowels + vowel signs (kar)",
+  "n_sentences": 250,
+  "n_codepoints_nonspace": 19113,
+  "n_grapheme_clusters": 10844,
+  "n_vowels": 6026,
+  "n_consonants": 10435,
+  "vowel_consonant_ratio": 0.5775,
+  "n_unique_chars": 81,
+  "bangla_font_for_figures": "NONE (Bangla labels may not render; see CSVs)"
+}

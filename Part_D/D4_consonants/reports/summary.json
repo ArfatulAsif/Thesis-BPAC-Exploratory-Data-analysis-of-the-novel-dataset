@@ -1,0 +1,17 @@
+{
+  "task_id": "T16_consonants",
+  "generated_at": "2026-07-31T20:23:35+00:00",
+  "config_hash": "44d8bf4c8ed3",
+  "n_utterances_in": 125649,
+  "n_utterances_used": 125541,
+  "count_unit": "sibilant_plus_stop_tokens",
+  "n_sibilant_tokens": 51059,
+  "n_sibilant_candidates": 51059,
+  "sylhet_cog_shift": {
+    "shift_hz": 28.67994528079089,
+    "shift_sd_units": 0.028550656085379465
+  },
+  "n_vot_tokens_detected": 74482,
+  "n_vot_candidates": 74590,
+  "vot_manual_check_status": "NOT STARTED -- vot_manual_check_worklist.csv needs human review (296 rows). Automatic VOT is provisional until then."
+}

@@ -1,0 +1,27 @@
+﻿report,task_id,n_in,n_used,count_unit,status
+Part_A\A1_unique_sentences\reports\summary.json,(no task_id),,,utterances,SKIP (no n_utterances_in/used -- pre-T2-contract report)
+Part_A\A2_audio_length\reports\summary.json,(no task_id),,,utterances,SKIP (no n_utterances_in/used -- pre-T2-contract report)
+Part_A\A3_utterance_count\reports\summary.json,(no task_id),,,utterances,SKIP (no n_utterances_in/used -- pre-T2-contract report)
+Part_A\A4_character_count\reports\summary.json,(no task_id),,,utterances,SKIP (no n_utterances_in/used -- pre-T2-contract report)
+Part_A\A5_word_count\reports\summary.json,(no task_id),,,utterances,SKIP (no n_utterances_in/used -- pre-T2-contract report)
+Part_A\A6_speaking_rate_pitch\reports\summary.json,(no task_id),,12750,utterances,SKIP (no n_utterances_in/used -- pre-T2-contract report)
+Part_A\A7_vad_speaking_rate\reports\summary.json,T6_A7_vad_speaking_rate,12747,12499,utterances,explained_drop
+Part_A\A8_audio_quality_snr\reports\summary.json,T7_snr_quality,12747,12747,utterances,ok
+Part_B\alignment_verification\reports\summary.json,T4_alignment_resolution,12750,12750,utterances,ok
+Part_B\wav2vec2_stt\reports\summary.json,(no task_id),,,utterances,SKIP (no n_utterances_in/used -- pre-T2-contract report)
+Part_B\whisper_stt\reports\summary.json,(no task_id),,,utterances,SKIP (no n_utterances_in/used -- pre-T2-contract report)
+Part_C\C0_Normalize_corpus\reports\summary.json,(no task_id),,,utterances,SKIP (no n_utterances_in/used -- pre-T2-contract report)
+Part_C\C1_Region_accent_distance_matrix\reports\summary.json,(no task_id),,,utterances,SKIP (no n_utterances_in/used -- pre-T2-contract report)
+Part_C\C2_Speaker_vs_accent_embedding_separability\reports\summary.json,(no task_id),,,utterances,SKIP (no n_utterances_in/used -- pre-T2-contract report)
+Part_C\C3_LOSO_within_gender\reports\summary.json,T9_loso_within_gender,12747,12747,utterances,ok
+Part_C\C4_distance_statistics\reports\summary.json,T10_distance_statistics,12747,12747,utterances,ok
+Part_D\D0_lexicon\reports\summary.json,T11_lexicon,2011,2011,word_types,ok (non-utterance unit: word_types)
+Part_D\D1_alignment\reports\summary.json,T12_alignment_finalize,12747,12610,utterances,explained_drop
+Part_D\D2_duration_rhythm\reports\summary.json,T13_T14_duration_rhythm,12610,12610,utterances,ok
+Part_D\D3_vowel_space\reports\summary.json,T15_vowel_space,206574,203540,vowel_tokens,ok (non-utterance unit: vowel_tokens)
+Part_D\D4_consonants\reports\summary.json,T16_consonants,124786,124695,sibilant_plus_stop_tokens,ok (non-utterance unit: sibilant_plus_stop_tokens)
+Part_D\D5_intonation\reports\summary.json,T17_intonation,12747,12744,utterances,explained_drop
+Part_D\D6_phonetic_distance\reports\summary.json,T18_phonetic_distance,8,8,regions,ok (non-utterance unit: regions)
+Part_D\D7_convergence\reports\summary.json,T19_convergence,8,8,regions,ok (non-utterance unit: regions)
+Part_E\E1_denoise_check\reports\summary.json,T20_denoise_check,50349,2000,sibilant_tokens,ok (non-utterance unit: sibilant_tokens)
+common\T2_manifest_schema\reports\summary.json,T2_manifest_schema,12750,12750,utterances,ok

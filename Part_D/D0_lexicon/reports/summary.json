@@ -1,0 +1,23 @@
+{
+  "task_id": "T11_lexicon",
+  "generated_at": "2026-07-24T21:10:43+00:00",
+  "config_hash": "44d8bf4c8ed3",
+  "n_utterances_in": 2011,
+  "n_utterances_used": 2011,
+  "n_sentence_tokens": 3384,
+  "n_unique_types": 2011,
+  "n_types_with_pronunciation": 2011,
+  "coverage_pct": 100.0,
+  "n_numeral_tokens": 51,
+  "numeral_note": "Digit-by-digit fallback reading (not natural numeral verbalization, e.g. '2023' read as 'two-zero-two-three' not 'two thousand twenty-three') -- flagged needs_numeral_verbalization_review=True for manual correction.",
+  "n_flagged_medial_schwa_risk": 1093,
+  "n_flagged_conjunct": 517,
+  "n_format_char_tokens_dropped": 1,
+  "phone_set_size": 45,
+  "review_top_n": 500,
+  "review_tail_n": 200,
+  "n_in_review_set": 700,
+  "manual_review_status": "COMPLETE (2026-07-25) -- holistic review by corpus author across all 700 words in lexicon_review.csv (top-500-by-frequency + random-200 tail). Verdict: accurate overall, no specific per-word corrections flagged. See review_notes column for the exact reviewer statement.",
+  "g2p_method": "rule-based (bpac_phon/g2p.py), authoritative -- epitran unusable (Python 3.9 incompatibility), bnlp_toolkit has no G2P module.",
+  "count_unit": "word_types"
+}

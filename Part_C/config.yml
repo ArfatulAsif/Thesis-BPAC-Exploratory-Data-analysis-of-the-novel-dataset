@@ -1,0 +1,97 @@
+# ============================================================================
+# BPAC Part C (v2) — cleaned-corpus accent analysis.
+#
+# Pipeline: C0 normalizes the raw corpus (removes empty/dead files, resamples
+# everything to a single 16 kHz mono format) into a CLEAN tree; C1 and C2 then
+# run on the clean tree. This removes the recording-format confound (44.1k/48k,
+# stereo/mono) that otherwise contaminates the embeddings.
+#
+#   <project_root>/
+#   ├── Part_C2/        <- this file (Part_C2/config.yml)
+#   ├── data/           <- RAW corpus (read-only input to C0)
+#   └── data_clean/     <- CLEAN corpus written by C0 (input to C1/C2)
+# ============================================================================
+
+paths:
+  raw_data_root: "../data"            # original corpus (input to C0)
+  data_root: "../data_clean"          # cleaned corpus (output of C0; input to C1/C2)
+  bpac_subdir: "BPAC"
+  sentences_csv: null                 # default: <data_root>/<sentences_filename>
+  reports_dirname: "reports"
+  cache_dir: "cache"
+
+corpus:
+  sentences_filename: "best_diverse_sentences.csv"
+  n_sentences: 250
+
+# ---- C0 normalization ----
+normalize:
+  target_sr: 16000                    # uniform output sample rate
+  mono: true                          # downmix to mono
+  peak_normalize: true                # scale each clip so peak = peak_dbfs
+  peak_dbfs: -1.0                     # target peak after normalization
+  min_ms: 200                         # clips shorter than this are treated as empty/dead
+  silence_peak_eps: 1.0e-4            # peak <= this => silent/dead
+  overwrite: false                    # skip files already written to the clean tree
+  rajshahi_focus: ["rajshahi", "dhaka"]   # extra diagnostics for these regions
+  align_dur_tol: 0.40                 # per-sentence duration deviation (fraction) flagged as alignment-suspect
+
+audio:
+  target_sr: 16000
+  top_db: 30
+  exclude_empty_audio: true
+
+# ---- embedding models ----
+models:
+  ssl:
+    hf_id: "microsoft/wavlm-large"
+    layer: "middle"                   # "middle" (most phonetic) | int | -1 ; middle ~ accent, last ~ speaker
+    pooling: "mean"                   # mean | max
+  speaker:
+    source: "speechbrain/spkrec-ecapa-voxceleb"
+
+inference:
+  device: "auto"
+  batch_size: 1
+  fp16: true
+  save_every: 300
+  max_utterances: null
+
+# ---- C1 distance ----
+c1_distance:
+  method: "ssl_controlled"            # ssl_controlled (recommended) | ssl_pooled | loso_confusion | mfcc_dtw
+  metric: "cosine"
+  standardize: true
+  per_sentence_center: true           # subtract per-sentence mean (removes content; keeps accent+speaker)
+  standard_region: "dhaka"
+  loso_classifier: "lda"              # for loso_confusion: lda | logreg
+  mfcc_n: 13
+  dtw_max_sentences: 60
+  dtw_max_speakers_per_region: 4
+
+# ---- C2 separability ----
+c2_separability:
+  projection: "both"                  # tsne | umap | both
+  standardize: true
+  residualize_speaker: true           # also test in speaker-residualized content space (cancels speaker)
+  loso_region_classifier: "lda"       # leave-one-speaker-out region classifier: lda | logreg
+  per_sentence_silhouette: true       # region silhouette per shared sentence (controls content)
+  tsne_perplexity: 30
+  umap_neighbors: 15
+  umap_min_dist: 0.1
+  sample_per_speaker: null
+  random_state: 42
+
+# ---- T9 within-gender / within-pipeline LOSO ----
+c3_loso_within_gender:
+  loso_subsets: ["all", "male", "female"]
+  loso_classifier: "lda"
+  pca_components: 50              # headline LOSO runs (validated vs C2's full-dim pooled number)
+  permutation_pca_components: 20  # extra reduction for the repeated permutation/bootstrap runs
+  permutation_cap_per_speaker: 60 # utterances/speaker cap during permutation/bootstrap (tractability)
+  n_permutations: 100             # reduced from spec's suggested 1000 -- LDA refit is the bottleneck
+  n_bootstrap: 100
+  random_state: 42
+
+logging:
+  verbose: true

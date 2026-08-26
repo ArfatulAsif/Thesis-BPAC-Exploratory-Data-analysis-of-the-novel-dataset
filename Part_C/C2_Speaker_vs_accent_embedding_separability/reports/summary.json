@@ -1,0 +1,40 @@
+{
+  "ssl_model": "microsoft/wavlm-large",
+  "ssl_layer": "middle",
+  "speaker_model": "speechbrain/spkrec-ecapa-voxceleb",
+  "data_root": "C:\\Users\\redwa\\OneDrive\\Desktop\\Thesis EDA\\Thesis-BPAC-Exploratory-Data-analysis-of-the-novel-dataset\\data_clean",
+  "silhouette": {
+    "speaker_ECAPA": {
+      "silhouette_by_region": 0.0338,
+      "silhouette_by_speaker": 0.2976,
+      "n": 12747
+    },
+    "content_WavLM": {
+      "silhouette_by_region": -0.0021,
+      "silhouette_by_speaker": 0.0791,
+      "n": 12747
+    },
+    "content_WavLM_speaker_residualized": {
+      "silhouette_by_region": -0.0178,
+      "silhouette_by_speaker": -0.0373,
+      "n": 12747
+    }
+  },
+  "per_sentence_region_silhouette": -0.0609,
+  "per_sentence_n": 250,
+  "loso_region_accuracy": 0.2511,
+  "loso_chance": 0.125,
+  "loso_macro_f1": 0.195,
+  "loso_per_region_recall": {
+    "chattogram": 0.026,
+    "dhaka": 0.052,
+    "faridpur": 0.275,
+    "khulna": 0.287,
+    "mymensingh": 0.087,
+    "rajshahi": 0.223,
+    "rangpur": 0.033,
+    "sylhet": 0.675
+  },
+  "residualized_region_silhouette": -0.0178,
+  "verdict": "Region is predictable on UNSEEN speakers (LOSO accuracy 0.251 vs chance 0.125, ×2.0). Accent generalizes across speakers ⇒ the accent signal is GENUINE, not speaker identity."
+}

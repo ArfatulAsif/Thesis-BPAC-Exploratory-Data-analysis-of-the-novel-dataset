@@ -1,0 +1,33 @@
+# ============================================================================
+# BPAC Part E -- validation (signal-processing only; no human listening study).
+#
+# Scaffolding (T1). E1 (denoise sanity check) lands as T20 is implemented.
+#
+#   <project_root>/
+#   ├── Part_E/         <- this file (Part_E/config.yml)
+#   ├── data_clean/     <- CLEAN corpus from Part_C/C0 (E1 baseline)
+#   └── Part_D/D4_consonants/reports/sibilant_tokens.parquet  <- E1 input (T20 needs T16 first)
+# ============================================================================
+
+paths:
+  data_root: "../data_clean"
+  bpac_subdir: "BPAC"
+  sentences_csv: null
+  sibilant_tokens: "../Part_D/D4_consonants/reports/sibilant_tokens.parquet"
+  reports_dirname: "reports"
+
+corpus:
+  sentences_filename: "best_diverse_sentences.csv"
+  n_sentences: 250
+
+# ---- E1 denoise sanity check (T20) ----
+e1_denoise_check:
+  n_sample_tokens: 2000                 # stratified by region and phone
+  denoiser: "noisereduce"
+  # noisereduce params used in the thesis's "denoised variant" -- fill in
+  # once recovered from the thesis pipeline; falls back to library defaults
+  # and reports_that fact if unrecoverable.
+  noisereduce_params: {}
+
+logging:
+  verbose: true

@@ -1,0 +1,37 @@
+{
+  "task_id": "T18_phonetic_distance",
+  "generated_at": "2026-07-31T20:31:25+00:00",
+  "config_hash": "44d8bf4c8ed3",
+  "n_utterances_in": 8,
+  "n_utterances_used": 8,
+  "count_unit": "regions",
+  "feature_blocks_used": [
+    "phone_duration",
+    "rhythm",
+    "vowel_formants",
+    "vowel_space_area",
+    "pillai",
+    "sibilant_cog",
+    "f0"
+  ],
+  "feature_blocks_excluded": [
+    "vot"
+  ],
+  "n_features": 74,
+  "cophenetic_correlation": 0.6825502952411883,
+  "top_branch_support": [
+    {
+      "split": "mymensingh,faridpur,dhaka,chattogram,khulna,rajshahi,rangpur,sylhet",
+      "support_pct": 100.0
+    },
+    {
+      "split": "dhaka,khulna",
+      "support_pct": 82.9
+    },
+    {
+      "split": "mymensingh,rajshahi",
+      "support_pct": 67.9
+    }
+  ],
+  "pc1_explained_variance": 0.3402862989219202
+}

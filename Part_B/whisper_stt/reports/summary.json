@@ -1,0 +1,15 @@
+{
+  "model_key": "whisper_bengaliai_medium",
+  "label": "Whisper-medium (Bengali.AI)",
+  "hf_id": "bengaliAI/tugstugi_bengaliai-asr_whisper-medium",
+  "type": "whisper",
+  "WER": 0.176,
+  "CER": 0.0701,
+  "n_scored": 12747,
+  "n_transcribed": 12750,
+  "n_excluded_empty_audio": 3,
+  "n_empty_hyp": 0,
+  "exclude_empty_audio": true,
+  "hardest_region": "sylhet",
+  "easiest_region": "mymensingh"
+}

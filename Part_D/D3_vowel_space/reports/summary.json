@@ -1,0 +1,54 @@
+{
+  "task_id": "T15_vowel_space",
+  "generated_at": "2026-07-31T20:15:24+00:00",
+  "config_hash": "44d8bf4c8ed3",
+  "n_utterances_in": 205714,
+  "n_utterances_used": 203425,
+  "count_unit": "vowel_tokens",
+  "n_before_formant_extraction": 205714,
+  "n_after_range_filter": 203425,
+  "retention_pct": 98.89,
+  "vowel_space_area_by_region": [
+    {
+      "region": "sylhet",
+      "vowel_space_area": 2.6363198137333765,
+      "n_vowel_types": 8
+    },
+    {
+      "region": "mymensingh",
+      "vowel_space_area": 2.615746762048663,
+      "n_vowel_types": 8
+    },
+    {
+      "region": "faridpur",
+      "vowel_space_area": 2.388089349580433,
+      "n_vowel_types": 8
+    },
+    {
+      "region": "rajshahi",
+      "vowel_space_area": 2.321354049569562,
+      "n_vowel_types": 8
+    },
+    {
+      "region": "rangpur",
+      "vowel_space_area": 2.2455744512858042,
+      "n_vowel_types": 8
+    },
+    {
+      "region": "chattogram",
+      "vowel_space_area": 2.0832015133218076,
+      "n_vowel_types": 8
+    },
+    {
+      "region": "dhaka",
+      "vowel_space_area": 1.9433306343997763,
+      "n_vowel_types": 8
+    },
+    {
+      "region": "khulna",
+      "vowel_space_area": 1.924249308568394,
+      "n_vowel_types": 8
+    }
+  ],
+  "n_pillai_pairs": 4
+}

@@ -1,0 +1,20 @@
+{
+  "task_id": "T12_heldout_region_check",
+  "generated_at": "2026-07-31T21:28:47+00:00",
+  "config_hash": "44d8bf4c8ed3",
+  "n_utterances_in": 2442,
+  "n_utterances_used": 182374,
+  "count_unit": "phone_tokens",
+  "held_out_region": "sylhet",
+  "n_sylhet_utterances_full_model": 2442,
+  "n_sylhet_utterances_heldout_model": 2446,
+  "n_matched_phone_tokens": 182374,
+  "pct_same_phone_label": 100.0,
+  "mean_start_boundary_diff_ms": 6.0682990996523625,
+  "median_start_boundary_diff_ms": 0.0,
+  "mean_end_boundary_diff_ms": 6.035509716297279,
+  "pct_start_within_10ms": 82.1718008049393,
+  "pct_start_within_20ms": 94.37255310515754,
+  "pct_start_within_30ms": 96.45508679965346,
+  "pct_start_within_50ms": 98.03974250715562
+}

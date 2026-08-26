@@ -1,0 +1,63 @@
+{
+  "task_id": "T9_loso_within_gender",
+  "generated_at": "2026-07-31T19:02:12+00:00",
+  "config_hash": "963b19f4ada1",
+  "n_utterances_in": 12747,
+  "n_utterances_used": 12747,
+  "count_unit": "utterances",
+  "loso_by_subset": [
+    {
+      "subset": "all",
+      "n_utterances": 12747,
+      "n_speakers": 51,
+      "n_regions": 8,
+      "accuracy": 0.22334666980465992,
+      "macro_f1": 0.19636460018412363,
+      "chance_uniform": 0.125,
+      "chance_majority_class": 0.19612457833215657,
+      "chance_stratified_random": 0.131882154850637,
+      "lift_vs_stratified": 1.6935321541994135
+    },
+    {
+      "subset": "male",
+      "n_utterances": 6500,
+      "n_speakers": 26,
+      "n_regions": 8,
+      "accuracy": 0.3110769230769231,
+      "macro_f1": 0.21695561887018755,
+      "chance_uniform": 0.125,
+      "chance_majority_class": 0.23076923076923078,
+      "chance_stratified_random": 0.14201183431952663,
+      "lift_vs_stratified": 2.1905
+    },
+    {
+      "subset": "female",
+      "n_utterances": 6247,
+      "n_speakers": 25,
+      "n_regions": 8,
+      "accuracy": 0.11525532255482632,
+      "macro_f1": 0.11949074342440605,
+      "chance_uniform": 0.125,
+      "chance_majority_class": 0.1600768368817032,
+      "chance_stratified_random": 0.12640624887492016,
+      "lift_vs_stratified": 0.9117850073129868
+    }
+  ],
+  "permutation_p_value": 0.38,
+  "bootstrap_ci_all": [
+    0.058462121212121215,
+    0.20403869047619044
+  ],
+  "ecapa_control": {
+    "accuracy": 0.16890248685965326,
+    "macro_f1": 0.15431366636389238,
+    "chance_stratified_random": 0.131882154850637,
+    "lift": 1.280707667014871,
+    "content_pooled_accuracy_for_comparison": 0.22334666980465992
+  },
+  "interpretation": "Asymmetric result: within male/lab speakers accuracy is STRONG (0.311 vs chance 0.142) -- region is genuinely predictable on unseen lab-recorded speakers, so the accent signal in that half of the corpus is real, not channel. Within female/app speakers accuracy is AT OR BELOW chance (0.115 vs 0.126) -- either the app-recording channel carries less separable accent signal (compression, mic variability), or region is simply harder to detect from these speakers/regions with current methods. Do not report the pooled number as if it applies uniformly to the whole corpus -- report both halves and flag the female/app gap as an open question, not a null result to hide.",
+  "pca_components_headline": 50,
+  "permutation_pca_components": 20,
+  "n_permutations": 100,
+  "compute_note": "n_permutations reduced from the spec's suggested 1000 to 100 for tractability (LDA refit cost); see module docstring."
+}

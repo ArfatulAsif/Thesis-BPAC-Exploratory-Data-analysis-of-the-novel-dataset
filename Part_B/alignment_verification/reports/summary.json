@@ -1,0 +1,23 @@
+{
+  "task_id": "T4_alignment_resolution",
+  "generated_at": "2026-07-31T18:31:16+00:00",
+  "config_hash": "71bfa24d4e79",
+  "n_utterances_in": 12750,
+  "n_utterances_used": 12750,
+  "count_unit": "utterances",
+  "n_flagged_by_t3": 300,
+  "n_resolution_rows": 523,
+  "n_corrected": 29,
+  "n_excluded_by_review": 0,
+  "n_ok": 483,
+  "n_unsure": 0,
+  "n_still_pending_review": 0,
+  "alignment_verification_rate": 0.99773,
+  "provisional": false,
+  "reviewer_agreement": {
+    "n_reviewers": 1,
+    "n_shared_utterances": 0,
+    "cohen_kappa": null,
+    "note": "Need >=2 reviewers with overlapping utterance_ids (see spotcheck.py --sample 0.2) for a real kappa; null until then."
+  }
+}

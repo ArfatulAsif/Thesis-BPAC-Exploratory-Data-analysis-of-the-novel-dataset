@@ -1,0 +1,18 @@
+{
+  "method": "ssl_controlled",
+  "features": "microsoft/wavlm-large (layer=middle) pooled (mean), cosine, per-sentence-centered",
+  "data_root": "C:\\Users\\redwa\\OneDrive\\Desktop\\Thesis EDA\\Thesis-BPAC-Exploratory-Data-analysis-of-the-novel-dataset\\data_clean",
+  "n_regions": 8,
+  "standard_region": "dhaka",
+  "closest_pair": [
+    "chattogram",
+    "sylhet",
+    0.9832
+  ],
+  "farthest_pair": [
+    "rangpur",
+    "sylhet",
+    1.0556
+  ],
+  "loso": null
+}

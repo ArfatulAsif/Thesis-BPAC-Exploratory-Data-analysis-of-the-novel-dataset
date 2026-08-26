@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bpac-stt"
+version = "0.1.0"
+description = "Part B speech-to-text analysis for the Bangla Parallel Accent Corpus (BPAC)"
+requires-python = ">=3.9"
+dependencies = [
+    "pandas>=1.5", "numpy>=1.23", "matplotlib>=3.6", "soundfile>=0.12",
+    "librosa>=0.10", "regex>=2023.0", "pyyaml>=6.0", "tqdm>=4.65",
+    "tabulate>=0.9", "jiwer>=3.0", "transformers>=4.40", "torch>=2.1",
+]
+
+[tool.setuptools]
+packages = ["bpac_stt"]
