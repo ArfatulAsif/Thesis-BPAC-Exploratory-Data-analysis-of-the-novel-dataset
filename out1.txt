@@ -1,7 +1,0 @@
-=== dead_skipped rows ===
-                                                                                                                                                                       filepath      region  sentence_id                          speaker_uid        status  in_dur_s  out_dur_s
-3660             C:\Users\redwa\OneDrive\Desktop\Thesis EDA\Thesis-BPAC-Exploratory-Data-analysis-of-the-novel-dataset\data\BPAC\Faridpur\speaker_female_003_popy\sound_161.wav    faridpur          161             faridpur_female_003_popy  dead_skipped     0.163      0.163
-6903  C:\Users\redwa\OneDrive\Desktop\Thesis EDA\Thesis-BPAC-Exploratory-Data-analysis-of-the-novel-dataset\data\BPAC\mymensingh\speaker_female_003_touamoniaysha\sound_154.wav  mymensingh          154  mymensingh_female_003_touamoniaysha  dead_skipped     0.041      0.041
-6935  C:\Users\redwa\OneDrive\Desktop\Thesis EDA\Thesis-BPAC-Exploratory-Data-analysis-of-the-novel-dataset\data\BPAC\mymensingh\speaker_female_003_touamoniaysha\sound_186.wav  mymensingh          186  mymensingh_female_003_touamoniaysha  dead_skipped     0.041      0.041
-
-columns: ['filepath', 'region', 'sentence_id', 'speaker_uid', 'status', 'in_dur_s', 'out_dur_s']
