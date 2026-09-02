@@ -22,6 +22,10 @@ Observed accuracy **0.1196** vs. permuted-null mean 0.1118 (sd 0.0300) over 100 
 
 [0.0585, 0.2040] over 100 valid resamples.
 
+## Subset-specific significance test: male
+
+Reviewer-defense follow-up (identical procedure to the pooled test above, restricted to the **male** subset). Observed accuracy **0.2590** vs. permuted-null mean 0.1031 (sd 0.0473) over 100 permutations -> **p=0.0000**. Bootstrap 95% CI: [0.0773, 0.3602] over 100 valid resamples.
+
 ## ECAPA (speaker-embedding) control
 
 If the speaker embedding (trained for speaker verification, not content) predicts region about as well as the content embedding, the signal is speaker identity, not accent. ECAPA accuracy **0.1689** (lift 1.28x) vs. content accuracy **0.2233**.
@@ -40,9 +44,13 @@ If the speaker embedding (trained for speaker verification, not content) predict
 
 *LOSO accuracy by subset vs. stratified-random chance.*
 
-![Permutation null distribution vs. observed accuracy.](figures/permutation_null_distribution.png)
+![Permutation null distribution vs. observed accuracy (all).](figures/permutation_null_distribution.png)
 
-*Permutation null distribution vs. observed accuracy.*
+*Permutation null distribution vs. observed accuracy (all).*
+
+![Permutation null distribution vs. observed accuracy (male).](figures/permutation_null_distribution_male.png)
+
+*Permutation null distribution vs. observed accuracy (male).*
 
 ## For the paper
 

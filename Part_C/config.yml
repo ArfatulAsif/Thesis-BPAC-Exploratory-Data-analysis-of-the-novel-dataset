@@ -85,6 +85,12 @@ c2_separability:
 # ---- T9 within-gender / within-pipeline LOSO ----
 c3_loso_within_gender:
   loso_subsets: ["all", "male", "female"]
+  # Reviewer-defense follow-up: the pooled ("all") permutation test/bootstrap CI
+  # alone leaves the male/lab-only 2.19x lift (Table 13) statistically untested.
+  # Run the identical procedure (same PCA reduction, classifier, cap, seed,
+  # n_permutations, n_bootstrap) on "male" too, so that number is confirmed or
+  # disconfirmed rather than left as a numerically-suggestive point estimate.
+  permutation_subsets: ["all", "male"]
   loso_classifier: "lda"
   pca_components: 50              # headline LOSO runs (validated vs C2's full-dim pooled number)
   permutation_pca_components: 20  # extra reduction for the repeated permutation/bootstrap runs

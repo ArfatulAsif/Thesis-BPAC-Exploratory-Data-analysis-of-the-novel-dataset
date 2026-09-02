@@ -80,6 +80,7 @@ def main():
 
     c3 = cfg.get("c3_loso_within_gender", {}) if isinstance(cfg, dict) else cfg["c3_loso_within_gender"]
     subsets = c3.get("loso_subsets", ["all", "male", "female"])
+    permutation_subsets = c3.get("permutation_subsets", ["all"])
     pca_components = int(c3.get("pca_components", 50))
     perm_pca_components = int(c3.get("permutation_pca_components", 20))
     n_permutations = int(c3.get("n_permutations", 100))
@@ -114,23 +115,43 @@ def main():
     loso_df = pd.DataFrame(rows)
     save_table(loso_df, out / "loso_accuracy_by_subset.csv", index=False)
 
-    # ---- permutation test (pooled "all" subset -- the primary confound-defense number) ----
-    meta_all, X_all = subset_by_gender(ssl_meta, ssl_X, "all")
-    meta_capped, X_capped = cap_per_speaker(meta_all, X_all, cap_for_perm, seed)
+    # ---- permutation test + bootstrap CI, per permutation_subsets ----
+    # Identical procedure for every subset in the list (same PCA reduction,
+    # classifier, per-speaker cap, seed, n_permutations, n_bootstrap) so results
+    # are directly comparable across subsets. "all" is always the primary
+    # confound-defense number; any other subset listed (e.g. "male") gets the
+    # same subset-specific significance test the pooled number already had,
+    # rather than being reported as a point estimate only.
     from sklearn.preprocessing import StandardScaler
     from sklearn.decomposition import PCA
-    Xz = StandardScaler().fit_transform(X_capped)
-    Xp = PCA(n_components=perm_pca_components, random_state=seed).fit_transform(Xz)
-    perm = permutation_test_loso(meta_capped, Xp, classifier=classifier, n_permutations=n_permutations,
-                                 seed=seed, progress=maybe_tqdm)
-    save_json(perm, out / "permutation_test.json")
-    print(f"[T9] permutation test: observed={perm['observed_accuracy']:.4f}  "
-          f"null_mean={perm['perm_accuracy_mean']:.4f}  p={perm['p_value']:.4f}")
 
-    # ---- bootstrap CI (pooled "all" subset) ----
-    boot = bootstrap_ci_loso(meta_capped, Xp, classifier=classifier, n_boot=n_boot, seed=seed, progress=maybe_tqdm)
-    save_json(boot, out / "bootstrap_ci.json")
-    print(f"[T9] bootstrap 95% CI: [{boot['ci_low']:.4f}, {boot['ci_high']:.4f}]")
+    perm_by_subset = {}
+    boot_by_subset = {}
+    for subset in permutation_subsets:
+        meta_sub, X_sub = subset_by_gender(ssl_meta, ssl_X, subset)
+        meta_capped, X_capped = cap_per_speaker(meta_sub, X_sub, cap_for_perm, seed)
+        Xz = StandardScaler().fit_transform(X_capped)
+        n_comp = min(perm_pca_components, Xz.shape[1], Xz.shape[0] - 1)
+        Xp = PCA(n_components=n_comp, random_state=seed).fit_transform(Xz)
+
+        perm = permutation_test_loso(meta_capped, Xp, classifier=classifier, n_permutations=n_permutations,
+                                     seed=seed, progress=maybe_tqdm)
+        save_json(perm, out / f"permutation_test_{subset}.json")
+        if subset == "all":
+            save_json(perm, out / "permutation_test.json")  # back-compat filename
+        perm_by_subset[subset] = perm
+        print(f"[T9] permutation test [{subset}]: observed={perm['observed_accuracy']:.4f}  "
+              f"null_mean={perm['perm_accuracy_mean']:.4f}  p={perm['p_value']:.4f}")
+
+        boot = bootstrap_ci_loso(meta_capped, Xp, classifier=classifier, n_boot=n_boot, seed=seed, progress=maybe_tqdm)
+        save_json(boot, out / f"bootstrap_ci_{subset}.json")
+        if subset == "all":
+            save_json(boot, out / "bootstrap_ci.json")  # back-compat filename
+        boot_by_subset[subset] = boot
+        print(f"[T9] bootstrap 95% CI [{subset}]: [{boot['ci_low']:.4f}, {boot['ci_high']:.4f}]")
+
+    perm = perm_by_subset["all"]
+    boot = boot_by_subset["all"]
 
     # ---- silhouette by subset ----
     sil_rows = []
@@ -182,11 +203,25 @@ def main():
     ax.hist(perm["perm_accuracies"], bins=20, color="lightgray", edgecolor="black", label="permuted null")
     ax.axvline(perm["observed_accuracy"], color="red", linewidth=2, label="observed")
     ax.set_xlabel("LOSO accuracy")
-    ax.set_title(f"T9 -- permutation null distribution (p={perm['p_value']:.4f})")
+    ax.set_title(f"T9 -- permutation null distribution, all (p={perm['p_value']:.4f})")
     ax.legend()
     save_fig(fig, fig_dir / "permutation_null_distribution.png")
     fig.savefig(fig_dir / "permutation_null_distribution.pdf", bbox_inches="tight")
     plt.close(fig)
+
+    for subset in permutation_subsets:
+        if subset == "all":
+            continue
+        p_s = perm_by_subset[subset]
+        fig, ax = plt.subplots(figsize=(6, 4))
+        ax.hist(p_s["perm_accuracies"], bins=20, color="lightgray", edgecolor="black", label="permuted null")
+        ax.axvline(p_s["observed_accuracy"], color="red", linewidth=2, label="observed")
+        ax.set_xlabel("LOSO accuracy")
+        ax.set_title(f"T9 -- permutation null distribution, {subset} (p={p_s['p_value']:.4f})")
+        ax.legend()
+        save_fig(fig, fig_dir / f"permutation_null_distribution_{subset}.png")
+        fig.savefig(fig_dir / f"permutation_null_distribution_{subset}.pdf", bbox_inches="tight")
+        plt.close(fig)
 
     # ---- interpretation ----
     acc_all = loso_df.loc[loso_df["subset"] == "all", "accuracy"].iloc[0]
@@ -238,6 +273,9 @@ def main():
         "loso_by_subset": loso_df.to_dict(orient="records"),
         "permutation_p_value": perm["p_value"],
         "bootstrap_ci_all": [boot["ci_low"], boot["ci_high"]],
+        "permutation_subsets": permutation_subsets,
+        "permutation_p_value_by_subset": {s: r["p_value"] for s, r in perm_by_subset.items()},
+        "bootstrap_ci_by_subset": {s: [r["ci_low"], r["ci_high"]] for s, r in boot_by_subset.items()},
         "ecapa_control": ecapa_control,
         "interpretation": interpretation,
         "pca_components_headline": pca_components,
@@ -270,6 +308,21 @@ def main():
     )
     rep.h2("Bootstrap 95% CI (resampling speakers)")
     rep.p(f"[{boot['ci_low']:.4f}, {boot['ci_high']:.4f}] over {boot['n_boot_valid']} valid resamples.")
+
+    for subset in permutation_subsets:
+        if subset == "all":
+            continue
+        p_s, b_s = perm_by_subset[subset], boot_by_subset[subset]
+        rep.h2(f"Subset-specific significance test: {subset}")
+        rep.p(
+            f"Reviewer-defense follow-up (identical procedure to the pooled test above, "
+            f"restricted to the **{subset}** subset). Observed accuracy "
+            f"**{p_s['observed_accuracy']:.4f}** vs. permuted-null mean "
+            f"{p_s['perm_accuracy_mean']:.4f} (sd {p_s['perm_accuracy_sd']:.4f}) over "
+            f"{p_s['n_permutations']} permutations -> **p={p_s['p_value']:.4f}**. "
+            f"Bootstrap 95% CI: [{b_s['ci_low']:.4f}, {b_s['ci_high']:.4f}] over "
+            f"{b_s['n_boot_valid']} valid resamples."
+        )
     rep.h2("ECAPA (speaker-embedding) control")
     rep.p(
         f"If the speaker embedding (trained for speaker verification, not content) predicts region "
@@ -281,7 +334,12 @@ def main():
     rep.table(sil_df, index=False)
     rep.h2("Figures")
     rep.image("figures/loso_accuracy_with_ci.png", "LOSO accuracy by subset vs. stratified-random chance.")
-    rep.image("figures/permutation_null_distribution.png", "Permutation null distribution vs. observed accuracy.")
+    rep.image("figures/permutation_null_distribution.png", "Permutation null distribution vs. observed accuracy (all).")
+    for subset in permutation_subsets:
+        if subset == "all":
+            continue
+        rep.image(f"figures/permutation_null_distribution_{subset}.png",
+                  f"Permutation null distribution vs. observed accuracy ({subset}).")
     rep.h2("For the paper")
     rep.p(
         "S6.3-S6.4: this is the single most important defensive result in the paper. Lead with the "

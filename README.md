@@ -3,10 +3,10 @@
 **A Parallel Corpus and Its Phonetic Structure**
 
 This repository contains the corpus construction, verification, and full
-analysis pipeline behind BPAC (the **Bangla Parallel Accent Corpus**) and
-its companion manuscript, *"BPAC: How Detectable Is Regional Accent in
-Read Bangla? A Parallel Corpus and Its Phonetic Structure"* (manuscript in
-preparation — see [Completed Paper/](Completed%20Paper/)).
+analysis pipeline behind BPAC (the **Bangla Parallel Accent Corpus**) — the
+dataset and codebase behind the manuscript *"BPAC: How Detectable Is
+Regional Accent in Read Bangla? A Parallel Corpus and Its Phonetic
+Structure"* (manuscript in preparation).
 
 ## About this research
 
@@ -24,7 +24,7 @@ script — so that region and speaker vary while linguistic content is held
 fixed by design. This parallel structure (every sentence, in every region)
 is what makes the analysis possible, and is, to our knowledge, the first
 time a Bangla speech corpus has been built this way specifically for
-accent research (see the corpus comparison in the paper's §2.1).
+accent research.
 
 We then measured detectability two independent ways:
 
@@ -45,16 +45,15 @@ out to be consonant/rhythm timing, not the Sylheti sibilant shift often
 cited anecdotally — which, traced back to its primary source, is not
 acoustically measured or even localized to Sylhet in the literature that
 is usually credited with it, and which we find to be a near-null effect
-once measured directly. Full results, statistics, and discussion are in
-[`Completed Paper/BPAC_paper.md`](Completed%20Paper/BPAC_paper.md) /
-[`BPAC_paper.pdf`](Completed%20Paper/BPAC_paper.pdf).
+once measured directly. Full results, statistics, and discussion are
+written up in the companion manuscript (in preparation).
 
 ## How the dataset was organized
 
 BPAC's defining property is that it is **parallel**: every one of the 51
-speakers read the *same* 250-sentence script, so `sound_042.wav` from a
-Sylhet speaker and `sound_042.wav` from a Rajshahi speaker are guaranteed
-to contain the same sentence. This is what lets the analysis attribute an
+speakers read the *same* 250-sentence script, so recording 42 from a
+Sylhet speaker and recording 42 from a Rajshahi speaker are guaranteed to
+contain the same sentence. This is what lets the analysis attribute an
 acoustic difference to *accent* rather than to *what was said*.
 
 **Script construction.** Text was sourced from twelve topical domains
@@ -65,7 +64,7 @@ subsets were generated and scored for lexical diversity; the three most
 diverse were manually reviewed for naturalness, grammaticality, and
 readability; one was selected and manually curated down to the final,
 standardized **250-sentence** script read by every speaker. (Full
-methodology: `Dataset collection/Dataset Part.pdf`, and paper §3.2.)
+methodology: `Dataset collection/Dataset Part.pdf`.)
 
 **Recruitment and recording.** 51 native speakers (25 female, 26 male),
 aged 19–25, were recruited across 8 regions — Sylhet, Chattogram, Dhaka,
@@ -84,26 +83,19 @@ explicitly authorized public release of voice recordings together with
 district/region, gender, and age, while withholding participant names and
 contact details from any public release.
 
-**On-disk layout.**
-
-```
-data/<region>/speaker_<gender>_<id>_<name>/sound_<NNN>.wav   # raw corpus (44.1/48 kHz; gitignored, not in this repo)
-data/best_diverse_sentences.csv                              # the 250-sentence script, columns: id, sentence
-verified_manifest.csv                                        # one row per utterance; the source of truth
-data_clean/<region>/.../sound_<NNN>.wav                      # normalized 16 kHz mono, written by Part_C/C0 (gitignored)
-```
-
-`sound_<NNN>.wav` links to sentence `id == int(NNN)` in
-`best_diverse_sentences.csv` — that mapping is the corpus's entire parallel
-structure. `verified_manifest.csv` (repo root) is the corrected,
-fully-reviewed manifest: an internal audit (`Part_B/alignment_verification/`)
-CER-scored every utterance's audio against its labeled sentence and found
-one systematic labeling error — a 29-utterance sentence-numbering rotation
-for one Rajshahi speaker — which is corrected in this manifest
-(`corrected` / `original_sentence_id` columns document exactly what
-changed). As shipped, the manifest has **0 excluded and 0 needs-review**
-rows across all 12,750 raw utterances (12,747 after dropping 3 dead
-recordings).
+**Utterance identity.** Every speaker's recordings are numbered so the
+sentence identifier is explicit — a speaker's recording of sentence 42 of
+the shared script is always labeled as such — so any two speakers', or any
+two regions', renditions of "the same sentence" can be retrieved and
+compared directly. `verified_manifest.csv` (tracked, at the repo root) is
+the corrected, fully-reviewed record of this mapping: an internal audit
+(`Part_B/alignment_verification/`) CER-scored every utterance's audio
+against its labeled sentence and found one systematic labeling error — a
+29-utterance sentence-numbering rotation for one Rajshahi speaker — which
+is corrected in this manifest (`corrected` / `original_sentence_id`
+columns document exactly what changed). As shipped, the manifest has **0
+excluded and 0 needs-review** rows across all 12,750 raw utterances
+(12,747 after dropping 3 dead recordings).
 
 | Property | Value |
 |---|---|
@@ -114,20 +106,15 @@ recordings).
 | Utterances per region | Sylhet 2500 · Faridpur ~1750 · Chattogram/Dhaka/Khulna/Rajshahi 1500 each · Mymensingh/Rangpur 1250 each |
 | Total raw utterances | 12,750 (12,747 after dropping 3 dead recordings) |
 | Total audio | ~27.74 hours |
-| Raw audio size | ~14 GB (`data/`) |
-| Normalized audio size | ~3.1 GB (`data_clean/`, 16 kHz mono, peak-normalized) |
 | Recording pipelines | lab (male) / SUST Kotha Android app (female) — confounded with gender by design |
 
-**Public release.** `data/` and `data_clean/` are not tracked in this git
-repository (too large) and are not included as-is in any public release,
-because the raw folder structure embeds participant first names (consent
-explicitly bars publishing those). An anonymized, publication-ready copy —
-speaker/utterance IDs rederived as collision-free `<region>_<gender>_<seq>`
-codes, names stripped, 16 kHz `data_clean/` audio only — is built by
-[`build_hf_release.py`](build_hf_release.py) into `HF_Release/BPAC/`
-(also gitignored locally) for publishing to Hugging Face under
-CC BY-NC 4.0; see [`HF_Release/BPAC/README.md`](HF_Release/BPAC/README.md)
-for the dataset card.
+**Public release.** The raw recordings are not distributed as collected —
+the original folder/file-naming scheme embeds participant first names,
+which consent explicitly bars from public release. An anonymized,
+publication-ready copy (speaker/utterance IDs rederived as collision-free
+`<region>_<gender>_<seq>` codes, participant names stripped entirely) is
+built by [`build_hf_release.py`](build_hf_release.py) for publishing to
+Hugging Face under CC BY-NC 4.0.
 
 ## Research conducted
 
@@ -139,15 +126,14 @@ its own `config.yml`, `analyze.py` scripts, and `reports/` outputs
 |---|---|---|
 | **Part A** — EDA | `bpac_eda` | Corpus descriptive statistics: sentence/utterance coverage, audio length, character/word frequency, VAD-based speaking rate, F0 by region, SNR / audio-quality auditing (A1–A8). |
 | **Part B** — ASR benchmark & verification | `bpac_stt` | WER/CER benchmarking with two independent ASR models (wav2vec2-XLSR, Whisper); `alignment_verification/` CER-scores every utterance against its labeled sentence to catch mislabeling, producing `verified_manifest.csv`. |
-| **Part C** — Accent structure | `bpac_accent` | Normalizes the corpus to 16 kHz mono (C0, removing the recording-format confound), then measures accent detectability via a WavLM region-distance matrix (C1), speaker-vs-accent embedding separability with leave-one-speaker-out region classification (C2), a within-gender LOSO control that isolates the pipeline/gender confound (C3), and distance-matrix statistics (C4). |
+| **Part C** — Accent structure | `bpac_accent` | Normalizes the corpus (C0, removing the recording-format confound), then measures accent detectability via a WavLM region-distance matrix (C1), speaker-vs-accent embedding separability with leave-one-speaker-out region classification (C2), a within-gender LOSO control that isolates the pipeline/gender confound (C3), and distance-matrix statistics (C4). |
 | **Part D** — Phonetic accent map | `bpac_phon` | Builds a Bangla pronunciation lexicon (D0), trains a Montreal Forced Aligner acoustic model from scratch and force-aligns the corpus with a held-out-region generalization check (D1), then measures phone duration & rhythm typology (D2), Lobanov-normalized vowel space (D3), sibilant spectral center of gravity & VOT (D4), intonation contours (D5), fuses everything into an 8×8 phonetic distance matrix (D6), and tests convergence between the phonetic and neural-embedding views of regional structure (D7). |
 | **Part E** — Validation | `bpac_valid` | Signal-processing sanity check only (E1): demonstrates why the corpus is deliberately *not* denoised — spectral-gating denoisers would suppress the same broadband energy that Part D's sibilant/VOT measurements depend on. No human listening study is used anywhere in this pipeline; regional-origin labels are validated at recruitment, not by post-hoc listener judgment. |
 
-Every number, table, and figure in the paper traces back to a specific
-script and `reports/` output in one of these five parts — see each Part's
-own `README.md` for its analyses, config knobs, and how to interpret its
-outputs, and `paper_template/PROVENANCE.md` for the number-by-number
-mapping used while writing the manuscript.
+Every number, table, and figure in the manuscript traces back to a
+specific script and `reports/` output in one of these five parts — see
+each Part's own `README.md` for its analyses, config knobs, and how to
+interpret its outputs.
 
 ## Repository layout
 
@@ -160,41 +146,42 @@ mapping used while writing the manuscript.
 ├── Part_E/              Validation (bpac_valid) — E1
 ├── common/              Shared manifest/provenance/consistency-check code
 ├── Dataset collection/  Consent forms + dataset-construction methodology (source PDFs)
-├── Literature Review/   Source PDFs reviewed for the paper's §2
-├── Completed Paper/     THE current manuscript: BPAC_paper.md / .pdf, figures/, build_pdf.py
-├── paper_template/      Manuscript scaffolding + PROVENANCE.md (number → source-file mapping)
-├── paper/, paper_by_me/ Earlier/legacy paper drafts (superseded by Completed Paper/)
+├── Literature Review/   Source PDFs reviewed for the manuscript's literature review
 ├── release/             Dataset-packaging helper scripts
-├── HF_Release/BPAC/     Anonymized, Hugging-Face-ready release copy (built, gitignored)
-├── build_hf_release.py  Builds HF_Release/BPAC/ from verified_manifest.csv + data_clean/
+├── build_hf_release.py  Builds an anonymized, publication-ready release copy of the corpus
 ├── verified_manifest.csv  Corrected, fully-reviewed utterance manifest (source of truth)
-├── CORPUS_FROZEN.json   Checksum/size snapshot of data_clean/ at freeze time
-├── data/, data_clean/   Raw / normalized audio (gitignored — see "Getting the data" below)
+├── CORPUS_FROZEN.json   Checksum/size snapshot of the normalized corpus at freeze time
+├── check_audio_quality.py, mark_empty_files.py  Standalone audio-QA utilities
 ├── Makefile             make part_a .. part_e / make all / make check / make clean
-├── CITATION.cff, LICENSE  Code citation metadata (MIT) — dataset license is CC BY-NC 4.0, declared separately in HF_Release/BPAC/README.md
+├── CITATION.cff, LICENSE  Code citation metadata (MIT)
 ```
+
+This repo's `.gitignore` excludes large or generated content that isn't
+meant to be version-controlled — the raw and normalized audio corpus, the
+built publication-ready dataset release, and this project's paper drafts
+among them. See `.gitignore` at the repo root for the exact list.
 
 ## Getting the data
 
-The raw (`data/`) and normalized (`data_clean/`) audio are not committed to
-this git repository — they're large binary corpora, not source code. To
-run the pipeline yourself:
+This repository is the *code*, not the corpus itself. The audio is
+intentionally not committed to git (large binary data), so a fresh clone
+needs it supplied separately before the pipeline can run:
 
-- **If you have the original recordings**: place them at `data/` as a
-  sibling of `Part_A/`, `Part_B/`, etc., following the
-  `data/<region>/speaker_<gender>_<id>_<name>/sound_<NNN>.wav` layout
-  above, plus `data/best_diverse_sentences.csv`. `data_clean/` is then
-  generated for you by `Part_C/C0_Normalize_corpus/analyze.py`.
+- **If you have the original recordings**: place them alongside `Part_A/`,
+  `Part_B/`, etc., following the layout each Part's `config.yml` and
+  `README.md` document (region → speaker → numbered sentence recordings,
+  plus the 250-sentence script as a CSV). The normalized copy used by
+  Parts C–E is then generated for you by
+  `Part_C/C0_Normalize_corpus/analyze.py`.
 - **If you only need the released, anonymized audio** (no participant
-  names, 16 kHz mono, CC BY-NC 4.0): use the Hugging Face dataset once
-  published (link to be added here), or build it locally yourself with
-  `python build_hf_release.py` if you already have `data_clean/` and
-  `verified_manifest.csv`.
+  names, CC BY-NC 4.0): use the Hugging Face dataset once published (link
+  to be added here), or build a local copy yourself with
+  `python build_hf_release.py` once you already have the normalized
+  corpus and `verified_manifest.csv` in place.
 
 ## Step-by-step: running the project
 
 ```bash
-# 0. Clone and get the raw corpus in place (see "Getting the data" above)
 git clone <this-repo>
 cd Thesis-BPAC-Exploratory-Data-analysis-of-the-novel-dataset
 ```
@@ -242,7 +229,7 @@ cd ..
 cd Part_C && pip install -r requirements.txt
 pip install umap-learn                      # optional (UMAP; t-SNE works without it)
 
-python C0_Normalize_corpus/analyze.py                             # writes ../data_clean (run first)
+python C0_Normalize_corpus/analyze.py                             # builds the normalized corpus copy (run first)
 python C1_Region_accent_distance_matrix/analyze.py                # WavLM region-distance matrix + dendrogram
 python C2_Speaker_vs_accent_embedding_separability/analyze.py     # speaker-vs-accent separability + LOSO region classification
 python C3_LOSO_within_gender/analyze.py                           # within-gender LOSO (isolates the pipeline/gender confound)
@@ -258,7 +245,7 @@ cd Part_D && pip install -r requirements.txt
 python D0_lexicon/analyze.py                          # builds the Bangla pronunciation lexicon
 
 # D1 forced alignment — Montreal Forced Aligner, installed separately via conda:
-python D1_alignment/prepare_corpus.py                 # data_clean/ -> mfa_corpus/ (speaker/utt.wav + .lab)
+python D1_alignment/prepare_corpus.py                 # converts the normalized corpus into MFA's expected layout (speaker/utt.wav + .lab)
 conda run -n aligner mfa train D1_alignment/mfa_corpus \
     D0_lexicon/reports/bpac_lexicon.txt \
     D1_alignment/reports/bpac_mfa_acoustic_model.zip \
@@ -267,7 +254,7 @@ python D1_alignment/finalize.py                        # TextGrids -> phone_toke
 
 # D1 held-out-region robustness check (confirms the aligner isn't just
 # memorizing regional pronunciation — see Part_D/README.md invariant #3):
-python D1_alignment/prepare_heldout_split.py            # mfa_corpus -> mfa_corpus_no_sylhet + mfa_corpus_sylhet_only
+python D1_alignment/prepare_heldout_split.py            # splits the prepared MFA corpus into a no-Sylhet training set and a Sylhet-only held-out set
 conda run -n aligner mfa train D1_alignment/mfa_corpus_no_sylhet \
     D0_lexicon/reports/bpac_lexicon.txt \
     D1_alignment/reports/bpac_mfa_acoustic_model_no_sylhet.zip \
@@ -280,7 +267,7 @@ python D1_alignment/heldout_align_and_compare.py        # compares held-out vs. 
 
 python D2_duration_rhythm/analyze.py       # phone duration + rhythm typology (%V, ΔC, nPVI)
 python D3_vowel_space/analyze.py           # Lobanov-normalized F1/F2 vowel space
-python D4_consonants/analyze.py            # sibilant spectral center of gravity + VOT (reads raw data/, not data_clean/)
+python D4_consonants/analyze.py            # sibilant spectral center of gravity + VOT (reads full-bandwidth raw audio, not the normalized copy)
 python D5_intonation/analyze.py            # averaged F0 contours per sentence per region
 python D6_phonetic_distance/analyze.py     # fuses D2–D5 into an 8x8 phonetic distance matrix + dendrogram
 python D7_convergence/analyze.py           # Mantel test: phonetic distance (D6) vs. neural-embedding distance (C1)
@@ -296,12 +283,21 @@ python E1_denoise_check/analyze.py          # denoising sanity check (depends on
 cd ..
 ```
 
+### Building the anonymized public dataset release
+
+```bash
+python build_hf_release.py   # requires verified_manifest.csv + the normalized corpus already built
+```
+
+This builds a local, anonymized, publication-ready copy of the corpus
+(audio + `metadata.csv` + a dataset card), ready to upload to Hugging Face.
+
 ### Running everything at once (optional)
 
 ```bash
 make all          # runs each Part's run_all.sh in order (A -> B -> C -> D -> E)
 make check        # cross-checks every reports/summary.json against CORPUS_FROZEN.json
-make clean        # removes all reports/ and __pycache__ output (data/, data_clean/ untouched)
+make clean        # removes all reports/ and __pycache__ output (the audio corpus itself is untouched)
 ```
 
 Note that each Part's `run_all.sh` currently chains only its core
@@ -310,39 +306,23 @@ covers C0–C2, not yet C3/C4; Part B's covers the two ASR models + combined
 report, not the alignment-verification scripts) — for the full set of
 analyses shown above, run the individual commands.
 
-**Building the paper PDF:**
-
-```bash
-cd "Completed Paper"
-python build_pdf.py     # renders BPAC_paper.md -> BPAC_paper.pdf
-```
-
-**Building the anonymized public dataset release:**
-
-```bash
-python build_hf_release.py   # requires verified_manifest.csv + data_clean/ already built
-```
-
-This writes `HF_Release/BPAC/` (anonymized audio + `metadata.csv` +
-`README.md` dataset card), ready to upload to Hugging Face.
-
 ## Dataset availability
 
 The corpus is being released on Hugging Face under **CC BY-NC 4.0**
-(non-commercial use with attribution); see
-[`HF_Release/BPAC/README.md`](HF_Release/BPAC/README.md) for the full
-dataset card, license terms, and loading instructions. **The companion
-research paper is not yet published** — cite the dataset directly until
-then (citation format in the dataset card).
+(non-commercial use with attribution). **The companion research paper is
+not yet published** — cite the dataset directly until then; see the
+dataset's own card on Hugging Face (link to be added here once published)
+for the citation format, full license terms, and loading instructions.
 
 ## Citation
 
-See [`CITATION.cff`](CITATION.cff) for the code citation. The manuscript
-(`Completed Paper/BPAC_paper.md`) and the dataset card
-(`HF_Release/BPAC/README.md`) both carry an interim citation format; both
-will be updated once the paper has a venue and DOI.
+See [`CITATION.cff`](CITATION.cff) for the code citation. A dataset-specific
+citation format is provided on the Hugging Face dataset card once
+published; both will be updated to the final paper citation once the
+manuscript has a venue and DOI.
 
 ## License
 
 Code in this repository is MIT-licensed (`LICENSE`). The dataset itself is
-licensed separately under CC BY-NC 4.0 — see `HF_Release/BPAC/README.md`.
+licensed separately under CC BY-NC 4.0 (full terms on the Hugging Face
+dataset card once published).

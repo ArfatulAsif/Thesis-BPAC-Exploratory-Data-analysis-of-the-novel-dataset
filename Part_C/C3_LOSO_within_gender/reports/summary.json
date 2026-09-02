@@ -1,7 +1,7 @@
 {
   "task_id": "T9_loso_within_gender",
-  "generated_at": "2026-07-31T19:02:12+00:00",
-  "config_hash": "963b19f4ada1",
+  "generated_at": "2026-08-29T07:56:35+00:00",
+  "config_hash": "c45d3933debd",
   "n_utterances_in": 12747,
   "n_utterances_used": 12747,
   "count_unit": "utterances",
@@ -48,6 +48,24 @@
     0.058462121212121215,
     0.20403869047619044
   ],
+  "permutation_subsets": [
+    "all",
+    "male"
+  ],
+  "permutation_p_value_by_subset": {
+    "all": 0.38,
+    "male": 0.0
+  },
+  "bootstrap_ci_by_subset": {
+    "all": [
+      0.058462121212121215,
+      0.20403869047619044
+    ],
+    "male": [
+      0.07729166666666668,
+      0.36019454656862737
+    ]
+  },
   "ecapa_control": {
     "accuracy": 0.16890248685965326,
     "macro_f1": 0.15431366636389238,
