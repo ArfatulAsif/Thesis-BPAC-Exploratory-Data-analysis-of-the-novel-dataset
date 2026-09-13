@@ -1,17 +1,94 @@
-# CITATION.cff -- placeholder (T1). Add co-authors, ORCID ids, and the
-# preferred-citation entry once the paper has a venue/DOI.
 cff-version: 1.2.0
-message: "If you use this code or the BPAC corpus, please cite it as below."
-title: "BPAC: A Parallel Regional-Accent Corpus for Bangla with Evidence of a Speaker-Independent Accent Signal"
+message: >-
+  If you use this code or the BPAC corpus, please cite the dataset as below.
+  Once the companion paper is published, please cite the paper instead.
+
+title: "BPAC: Bangla Parallel Accent Corpus — analysis code"
 type: software
-authors:
-  - family-names: "Asif"
-    given-names: "Arfatul"
-    email: "redwaniarif@gmail.com"
-  # TODO: add remaining co-authors
-repository-code: "https://github.com/ArfatulAsif/Thesis-BPAC-Exploratory-Data-analysis-of-the-novel-dataset"
-# TODO: update once the GitHub repo is renamed to bpac-corpus (spec T1) --
-# not done automatically here since renaming the remote is a user action.
-license: MIT
 version: 0.1.0
 date-released: "2026-07-25"
+license: MIT
+
+abstract: >-
+  Analysis code accompanying the Bangla Parallel Accent Corpus (BPAC), a
+  parallel regional-accent speech corpus in which 51 native speakers from
+  eight regions of Bangladesh each read an identical 250-sentence script of
+  standard Bangla. The repository covers corpus construction and exploratory
+  analysis, cross-regional speech-to-text benchmarking, speaker-independent
+  accent classification from self-supervised embeddings, and classical
+  acoustic-phonetic measurement including forced alignment, vowel-space
+  geometry, rhythm typology, and sibilant spectral analysis.
+
+authors:
+  - family-names: "Asif"
+    given-names: "Arfatul Islam"
+    email: "arfatulislam2001@gmail.com"
+    orcid: "https://orcid.org/0009-0002-5032-2895"
+    affiliation: "Department of Computer Science and Engineering, Shahjalal University of Science and Technology"
+    country: BD
+
+repository-code: "https://github.com/ArfatulAsif/Thesis-BPAC-Exploratory-Data-analysis-of-the-novel-dataset"
+url: "https://huggingface.co/datasets/ArfatulAsif/BPAC"
+
+identifiers:
+  - type: doi
+    value: "10.57967/hf/10299"
+    description: "The BPAC corpus on the Hugging Face Hub"
+
+keywords:
+  - Bangla
+  - Bengali
+  - speech corpus
+  - parallel corpus
+  - regional accent
+  - dialectometry
+  - acoustic phonetics
+  - automatic speech recognition
+  - accent conversion
+  - low-resource language
+
+# Cite the dataset until the companion paper is published. Swap this block
+# for the `type: article` entry at the bottom of the file once the paper has
+# a venue and DOI.
+preferred-citation:
+  type: dataset
+  title: "BPAC: Bangla Parallel Accent Corpus"
+  authors:
+    - family-names: "Asif"
+      given-names: "Arfatul Islam"
+      orcid: "https://orcid.org/0009-0002-5032-2895"
+  year: 2026
+  publisher:
+    name: "Hugging Face"
+  doi: "10.57967/hf/10299"
+  url: "https://huggingface.co/datasets/ArfatulAsif/BPAC"
+  license: CC-BY-NC-4.0
+  notes: >-
+    Dataset accompanying a manuscript in preparation, "BPAC: How Detectable
+    is Regional Accent in Read Bangla? A Parallel Corpus and its Phonetic
+    Structure." Cite this dataset directly until the companion paper is
+    published.
+
+# ---------------------------------------------------------------------------
+# TODO on publication: replace the `preferred-citation` block above with the
+# entry below, filling in the full author list, journal, volume, pages, DOI.
+#
+# preferred-citation:
+#   type: article
+#   status: in-preparation          # -> submitted -> in-press -> (remove)
+#   title: "BPAC: How Detectable is Regional Accent in Read Bangla? A Parallel Corpus and its Phonetic Structure"
+#   authors:
+#     - family-names: "Asif"
+#       given-names: "Arfatul Islam"
+#       orcid: "https://orcid.org/0009-0002-5032-2895"
+#     # add remaining co-authors to match the published byline
+#   year: 2026
+#   journal: ""
+#   volume:
+#   start:
+#   end:
+#   doi: ""
+# ---------------------------------------------------------------------------
+
+# TODO: update `repository-code` if the GitHub repo is renamed to `bpac`;
+#       GitHub redirects the old URL, so nothing breaks in the interim.

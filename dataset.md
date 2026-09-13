@@ -49,7 +49,7 @@ For more context:
 data/
 ├── BPAC/
 │   ├── chattogram/
-│   │   ├── speaker_female_001_mahi/
+│   │   ├── speaker_female_001_name/
 │   │   │   ├── sound_001.wav
 │   │   │   ├── sound_002.wav
 │   │   │   ├── sound_003.wav
