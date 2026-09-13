@@ -1,6 +1,6 @@
 # C2 (v2) — Speaker-vs-Accent Separability
 
-**Speaker:** `speechbrain/spkrec-ecapa-voxceleb` (ECAPA). **Content:** `microsoft/wavlm-large` (WavLM, layer=middle). **Corpus:** clean `C:\Users\redwa\OneDrive\Desktop\Thesis EDA\Thesis-BPAC-Exploratory-Data-analysis-of-the-novel-dataset\data_clean`.
+**Speaker:** `speechbrain/spkrec-ecapa-voxceleb` (ECAPA). **Content:** `microsoft/wavlm-large` (WavLM, layer=middle). **Corpus:** clean `<PROJECT_ROOT>\data_clean`.
 
 ## Leave-one-speaker-out region classification (the confound test)
 

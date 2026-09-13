@@ -1,6 +1,6 @@
 # C0 — Corpus Normalization & Diagnostics
 
-Wrote a clean 16 kHz mono corpus to `C:\Users\redwa\OneDrive\Desktop\Thesis EDA\Thesis-BPAC-Exploratory-Data-analysis-of-the-novel-dataset\data_clean` (peak-normalized=True). C1/C2 read this tree.
+Wrote a clean 16 kHz mono corpus to `<PROJECT_ROOT>\data_clean` (peak-normalized=True). C1/C2 read this tree.
 
 ## Normalization totals
 
@@ -10,7 +10,7 @@ Wrote a clean 16 kHz mono corpus to `C:\Users\redwa\OneDrive\Desktop\Thesis EDA\
 Re-normalized from `../verified_manifest.csv` (Phase 1): **0** utterances excluded by T4 review (vs. the plain dead-file drop above), corrected `sentence_id` mappings honored. See Part_B/alignment_verification/reports/report.md for the ASR-based alignment verification rate (T3/T4) that this corpus reflects -- **check whether that rate is still `provisional` before citing this freeze as final.**
 
 - `checksums.csv`: sha256 for all **12747** files in `data_clean/`.
-- `CORPUS_FROZEN.json` -> `C:\Users\redwa\OneDrive\Desktop\Thesis EDA\Thesis-BPAC-Exploratory-Data-analysis-of-the-novel-dataset\CORPUS_FROZEN.json` (checksum_of_checksums=`e2124c04809ef425...`).
+- `CORPUS_FROZEN.json` -> `<PROJECT_ROOT>\CORPUS_FROZEN.json` (checksum_of_checksums=`e2124c04809ef425...`).
 ## Per-region summary
 
 | region     |   n_input |   n_written |   n_exists_skipped |   n_dead_skipped |   n_load_failed |   median_in_dur_s |

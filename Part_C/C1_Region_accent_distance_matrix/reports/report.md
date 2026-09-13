@@ -2,7 +2,7 @@
 
 **Features:** microsoft/wavlm-large (layer=middle) pooled (mean), cosine, per-sentence-centered.
 
-**Corpus:** clean tree at `C:\Users\redwa\OneDrive\Desktop\Thesis EDA\Thesis-BPAC-Exploratory-Data-analysis-of-the-novel-dataset\data_clean` (uniform 16 kHz mono).
+**Corpus:** clean tree at `<PROJECT_ROOT>\data_clean` (uniform 16 kHz mono).
 
 ## Headline
 
