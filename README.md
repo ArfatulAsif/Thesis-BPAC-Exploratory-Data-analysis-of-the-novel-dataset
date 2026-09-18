@@ -13,6 +13,8 @@
 [![license](https://img.shields.io/badge/Code-MIT-green.svg?labelColor=gray)](LICENSE)
 [![data license](https://img.shields.io/badge/Data-CC%20BY--NC%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc/4.0/)
 
+
+
 </div>
 
 This repository contains the corpus construction, verification, and complete
@@ -29,6 +31,10 @@ specific script and `reports/` output in this repo. See
 
 ## Results at a glance
 
+<br>
+<br>
+
+
 | Question | Answer | Source |
 |---|---|---|
 | Does region change ASR error on identical text? | Yes, consistently across two architectures. Sylhet worst (CER 0.0931 / 0.0840), Mymensingh best (0.0675 / 0.0604). | `Part_B/*/reports/` |
@@ -40,12 +46,19 @@ specific script and `reports/` output in this repo. See
 | Which phonetic dimension organizes regions? | Dropping phone duration moves the fused matrix most (*r* = 0.511) — but confounded with block size and gender ratio. | `Part_D/D6_phonetic_distance/` |
 | Do neural and phonetic views agree? | No. Mantel *r* = 0.138, *p* = 0.46. Neither tracks geography. | `Part_D/D7_convergence/` |
 
+
 > **Read the nulls as findings, not shortfalls.** The corpus is built to make
 > accent detection as clean as possible; a subtle, condition-dependent result
 > from read, content-controlled speech is a *conservative lower bound*, not
 > evidence that accent is absent.
 
+<br>
+<br>
+
 ---
+
+<br>
+<br>
 
 ## About this research
 
@@ -66,12 +79,16 @@ corpus has been built this way specifically for accent research.
 Detectability is then measured two independent ways, chosen because they fail
 differently:
 
+<br>
+
 1. **Self-supervised neural embeddings** (WavLM-Large, middle layer) evaluated
    by strict **leave-one-speaker-out** region classification, with speaker-level
    permutation testing and a speaker-verification-embedding control. A random
    train/test split would measure voice memorization at least as much as accent;
    LOSO is the only fair test.
-2. **Classical acoustic-phonetic dialectometry** — phone duration, rhythm
+<br>
+
+3. **Classical acoustic-phonetic dialectometry** — phone duration, rhythm
    typology, Lobanov-normalized vowel space, sibilant spectral center of
    gravity, and intonation — measured off Montreal Forced Aligner boundaries
    from an acoustic model trained on this corpus and validated with a
@@ -81,6 +98,9 @@ The two resulting 8×8 region-distance matrices are then compared to each other
 and to geography.
 
 ---
+
+<br>
+<br>
 
 ## The corpus
 
@@ -92,6 +112,8 @@ the highest-scoring were manually reviewed for naturalness, grammaticality and
 structural variance; one was curated down to the final **250-sentence** script
 read by every speaker. Full methodology: `Dataset collection/Dataset Part.pdf`.
 
+<br>
+
 | Script property | Value | | Script property | Value |
 |---|---|---|---|---|
 | Sentences | 250 | | Distinct characters | 81 |
@@ -99,6 +121,10 @@ read by every speaker. Full methodology: `Dataset collection/Dataset Part.pdf`.
 | Unique word types | 2,012 | | Unicode code points | 19,113 (non-space) |
 | Type–token ratio | 0.594 | | Vowel:consonant ratio | 0.578 |
 | Hapax legomena | 1,485 | | Sentence length | 13.5 words (2–122) |
+
+
+<br>
+
 
 **Recruitment and recording.** 51 native speakers (26 male, 25 female), aged
 19–25, across Sylhet, Chattogram, Dhaka, Faridpur, Khulna, Mymensingh, Rajshahi
@@ -109,11 +135,15 @@ sound-treated room at the SUST Audio Laboratory; female participants recorded
 remotely through a purpose-built Android app (*SUST Kotha*) after online
 training on minimizing background noise.
 
+<br>
+
 > ⚠️ **The recording pipeline is perfectly confounded with speaker gender**
 > (lab = male, app = female). Every Part treats this as a hard structural
 > constraint, never as something to explain away: no analysis here claims to
 > separate recording condition from gender, and the central detectability
 > experiments are re-run *within* each subset to hold the confound constant.
+
+<br>
 
 | Property | Value |
 |---|---|
@@ -125,6 +155,9 @@ training on minimizing background noise.
 | Total audio | 27 h 44 m (27.74 h); mean utterance 7.83 s |
 | Recording formats | Lab: 44.1/48 kHz, stereo, 16–24 bit · App: 44.1 kHz, mono, 16 bit |
 | Working corpus | 16 kHz mono, peak-normalized to −1 dBFS |
+
+<br>
+<br>
 
 **Manifest integrity.** [`verified_manifest.csv`](verified_manifest.csv) is the
 corrected, fully-reviewed audio↔sentence mapping and the source of truth for
@@ -138,12 +171,18 @@ has **0 excluded** and **0 needs-review** rows.
 
 ---
 
+<br>
+<br>
+
 ## Privacy and anonymization
 
 Informed consent (signed paper form for lab participants, equivalent online form
 for app participants — blank templates in `Dataset collection/`) explicitly
 authorized public release of the recordings together with **district/region,
 gender and age**, while **withholding participant names and contact details**.
+
+<br>
+<br>
 
 This repository is published accordingly:
 
@@ -164,12 +203,18 @@ This repository is published accordingly:
 - **Absolute local paths are normalized** to `<PROJECT_ROOT>` in all committed
   reports.
 
+<br>
+<br>
+
 Anonymization is lossless for the science: speaker counts, region×gender
 balance, fold structure and every reported statistic are unchanged. Region and
 gender are retained deliberately — both are released under consent and both are
 analysis variables.
 
 ---
+
+<br>
+<br>
 
 ## Repository layout
 
@@ -203,6 +248,10 @@ drafts. See `.gitignore` for the exact list.
 
 ---
 
+
+<br>
+<br>
+
 ## Where every number comes from
 
 | Manuscript content | Produced by | Report artifact |
@@ -227,6 +276,9 @@ drafts. See `.gitignore` for the exact list.
 
 ---
 
+<br>
+<br>
+
 ## Getting the data
 
 This repository is the **code**, not the corpus. Audio is intentionally not
@@ -249,6 +301,9 @@ committed. A fresh clone needs it supplied separately:
       ├── metadata.csv
       └── <region>/...
   ```
+
+<br>
+<br>
 
   The Hugging Face release derives its own anonymous speaker sequence, so its
   IDs are **not** guaranteed to correspond one-to-one with the
@@ -277,11 +332,18 @@ committed. A fresh clone needs it supplied separately:
 
 ---
 
+<br>
+<br>
+
+
 ## Environment
 
 Python 3.9 (the published numbers were produced on CPython 3.9, Windows).
 Each Part pins its own dependencies; `requirements-lock.txt` at the repo root
 records the exact versions used for the published Part A/B/C results.
+
+<br>
+<br>
 
 ```bash
 git clone https://github.com/ArfatulAsif/Thesis-BPAC-Exploratory-Data-analysis-of-the-novel-dataset.git
@@ -296,11 +358,19 @@ conda.
 
 ---
 
+<br>
+<br>
+<br>
+<br>
+
 ## Running the pipeline
 
 Every `analyze.py` reads its paths and hyperparameters from that Part's
 `config.yml` and takes only `--config` — **edit `config.yml`, don't pass ad-hoc
 flags.** Run analyses in the order shown; later steps depend on earlier output.
+
+<br>
+<br>
 
 ### Part A — corpus descriptive EDA
 
@@ -318,6 +388,9 @@ python A8_audio_quality_snr/analyze.py      # WADA-style SNR estimate + SNR-vs-W
 cd ..
 ```
 
+<br>
+<br>
+
 ### Part B — ASR benchmark + alignment verification
 
 ```bash
@@ -334,6 +407,9 @@ python alignment_verification/resolve.py                            # applies de
 cd ..
 ```
 
+<br>
+<br>
+
 ### Part C — accent structure
 
 ```bash
@@ -347,6 +423,9 @@ python C3_LOSO_within_gender/analyze.py                           # within-gende
 python C4_distance_statistics/analyze.py                          # bootstrap CIs + Mantel test on C1's distances
 cd ..
 ```
+
+<br>
+<br>
 
 ### Part D — phonetic accent map
 
@@ -385,6 +464,10 @@ python D7_convergence/analyze.py           # Mantel test: phonetic (D6) vs. neur
 cd ..
 ```
 
+<br>
+<br>
+
+
 ### Part E — validation
 
 ```bash
@@ -393,6 +476,9 @@ cd Part_E && pip install -r requirements.txt
 python E1_denoise_check/analyze.py          # denoising sanity check (depends on D4's sibilant tokens)
 cd ..
 ```
+
+<br>
+<br>
 
 ### Running several at once
 
@@ -408,6 +494,11 @@ make clean        # removes reports/ and __pycache__ output (the audio corpus is
 > is not yet implemented.
 
 ---
+
+
+<br>
+<br>
+
 
 ## Reproducibility notes and known caveats
 
@@ -444,6 +535,9 @@ here so they are visible before anyone re-uses a number.
 
 ---
 
+<br>
+<br>
+
 ## Dataset availability
 
 🤗 **[huggingface.co/datasets/ArfatulAsif/BPAC](https://huggingface.co/datasets/ArfatulAsif/BPAC)**
@@ -451,6 +545,10 @@ here so they are visible before anyone re-uses a number.
 **CC BY-NC 4.0** (non-commercial use with attribution). The release comprises
 the original recordings at their native formats, a 16 kHz mono working corpus,
 per-utterance metadata, and the 250-sentence script.
+
+
+<br>
+<br>
 
 ## Citation
 
@@ -475,6 +573,9 @@ until then**:
 For the analysis code specifically, see [`CITATION.cff`](CITATION.cff). Both
 will be updated to the final paper citation once the manuscript has a venue and
 DOI.
+
+<br>
+<br>
 
 ## License
 
